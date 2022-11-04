@@ -74,11 +74,12 @@ tmon="$(vnstat -i eth0 -m | grep "`date +"%b '%y"`" | awk '{print $9" "substr ($
 cpu_usage1="$(ps aux | awk 'BEGIN {sum=0} {sum+=$3}; END {print sum}')"
 cpu_usage="$((${cpu_usage1/\.*} / ${corediilik:-1}))"
 cpu_usage+=" %"
-ISP=$(curl -s ipinfo.io/org | cut -d " " -f 2-10 )
-CITY=$(curl -s ipinfo.io/city )
-WKT=$(curl -s ipinfo.io/timezone )
+ISP=$(curl -s ipinfo.io/org?token=b9434e9993eb72 | cut -d " " -f 2-10 )
+CITY=$(curl -s ipinfo.io/city?token=b9434e9993eb72 )
+WKT=$(curl -s ipinfo.io/timezone?token=b9434e9993eb72 )
 DAY=$(date +%A)
 DATE=$(date +%m/%d/%Y)
+DATE2=$(date -R | cut -d " " -f -5)
 IPVPS=$(curl -s ipinfo.io/ip )
 cname=$( awk -F: '/model name/ {name=$2} END {print name}' /proc/cpuinfo )
 cores=$( awk -F: '/model name/ {core++} END {print core}' /proc/cpuinfo )
@@ -90,12 +91,12 @@ clear
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "                 • SUPREME •                 "
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\e[33m Operating System     \e[0m:  "`hostnamectl | grep "Operating System" | cut -d ' ' -f5-`	
-echo -e "\e[33m Total Amount Of RAM  \e[0m:  $tram MB"
-echo -e "\e[33m System Uptime        \e[0m:  $uptime "
-echo -e "\e[33m Isp Name             \e[0m:  $ISP"
-echo -e "\e[33m Domain               \e[0m:  $domain"	
-echo -e "\e[33m Ip Vps               \e[0m:  $IPVPS"	
+echo -e "\e[33m OS            \e[0m:  "`hostnamectl | grep "Operating System" | cut -d ' ' -f5-`	
+echo -e "\e[33m IP            \e[0m:  $IPVPS"	
+echo -e "\e[33m ASN           \e[0m:  $ISP"
+echo -e "\e[33m CITY          \e[0m:  $CITY"
+echo -e "\e[33m DOMAIN        \e[0m:  $domain"	
+echo -e "\e[33m DATE & TIME   \e[0m:  $DATE2"	
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "                 • SCRIPT MENU •                 "
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -104,15 +105,15 @@ echo -e " [\e[36m•2\e[0m] Vmess Menu"
 echo -e " [\e[36m•3\e[0m] Vless Menu"
 echo -e " [\e[36m•4\e[0m] Shadowsocks Menu"
 echo -e " [\e[36m•5\e[0m] Trojan Menu"
-echo -e " [\e[36m•6\e[0m] SYSTEM Menu"
+echo -e " [\e[36m•6\e[0m] System Menu"
 echo -e " [\e[36m•7\e[0m] Status Service"
 echo -e " [\e[36m•8\e[0m] Clear RAM Cache"
 echo -e   ""
 echo -e   " Press x or [ Ctrl+C ] • To-Exit-Script"
 echo -e   ""
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e " \e[33mNama Klien	\E[0m: $Name"
-echo -e " \e[33mExpired 	\E[0m: $Exp2"
+echo -e " \e[33mClient Name \E[0m: $Name"
+echo -e " \e[33mExpired     \E[0m: $Exp2"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e   ""
 read -p " Select menu :  "  opt
