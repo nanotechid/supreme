@@ -28,13 +28,14 @@ echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━�
 echo -e ""
 echo -e " [\e[36m•1\e[0m] Panel Domain"
 #echo -e " [\e[36m•2\e[0m] Change Port All Account"
-echo -e " [\e[36m•2\e[0m] Webmin Menu"
-echo -e " [\e[36m•3\e[0m] Speedtest VPS"
+#echo -e " [\e[36m•2\e[0m] Webmin Menu"
+echo -e " [\e[36m•2\e[0m] Speedtest VPS"
 #echo -e " [\e[36m•5\e[0m] About Script"
-echo -e " [\e[36m•4\e[0m] Set Auto Reboot"
-echo -e " [\e[36m•5\e[0m] Restart All Service"
+echo -e " [\e[36m•3\e[0m] Set Auto Reboot"
+echo -e " [\e[36m•4\e[0m] Restart All Service"
 #echo -e " [\e[36m•8\e[0m] Change Banner"
-echo -e " [\e[36m•6\e[0m] Cek Bandwith"
+echo -e " [\e[36m•5\e[0m] Cek Bandwith"
+echo -e " [\e[36m•6\e[0m] Install TCP BBR"
 echo -e ""
 echo -e " [\e[31m•0\e[0m] \e[31mBACK TO MENU\033[0m"
 echo -e   ""
@@ -47,13 +48,14 @@ echo -e ""
 case $opt in
 1) clear ; m-domain ; exit ;;
 #2) clear ; port-change ; exit ;;
-2) clear ; m-webmin ; exit ;;
-3) clear ; speedtest ; exit ;;
+#2) clear ; m-webmin ; exit ;;
+2) clear ; speedtest ; exit ;;
 #5) clear ; about ; exit ;;
-4) clear ; auto-reboot ; exit ;;
-5) clear ; restart ; exit ;;
+3) clear ; auto-reboot ; exit ;;
+4) clear ; restart ; exit ;;
 #8) clear ; nano /etc/issue.net ; exit ;; #ssh-vpn banner.conf
-6) clear ; bw ; exit ;;
+5) clear ; bw ; exit ;;
+6) clear ; m-tcp ; exit ;;
 0) clear ; menu ; exit ;;
 x) exit ;;
 *) echo -e "" ; echo "Anda salah tekan" ; sleep 1 ; m-system ;;
