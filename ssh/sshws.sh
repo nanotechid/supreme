@@ -132,10 +132,7 @@ elif [[ "$num" = "2" ]]; then
 stop
 else
 clear
-ssh-menu
+m-sshovpn
 fi
 read -n 1 -s -r -p "Press any key to back on menu"
-
-ssh-menu
-
-
+m-sshovpn
