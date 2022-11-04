@@ -289,6 +289,7 @@ wget -O delete "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/del
 wget -O autokill "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/autokill.sh"
 wget -O ceklim "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/ceklim.sh"
 wget -O tendang "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/tendang.sh"
+wget -O sshws "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/sshws.sh"
 
 # menu system
 wget -O m-system "https://raw.githubusercontent.com/nanotechid/supreme/aio/menu/m-system.sh"
@@ -296,12 +297,13 @@ wget -O m-domain "https://raw.githubusercontent.com/nanotechid/supreme/aio/menu/
 wget -O add-host "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/add-host.sh"
 #wget -O port-change "https://raw.githubusercontent.com/nanotechid/supreme/aio/port/port-change.sh"
 wget -O certv2ray "https://raw.githubusercontent.com/nanotechid/supreme/aio/xray/certv2ray.sh"
-wget -O m-webmin "https://raw.githubusercontent.com/nanotechid/supreme/aio/menu/m-webmin.sh"
+#wget -O m-webmin "https://raw.githubusercontent.com/nanotechid/supreme/aio/menu/m-webmin.sh"
 wget -O speedtest "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/speedtest_cli.py"
 #wget -O about "https://raw.githubusercontent.com/nanotechid/supreme/aio/menu/about.sh"
 wget -O auto-reboot "https://raw.githubusercontent.com/nanotechid/supreme/aio/menu/auto-reboot.sh"
 wget -O restart "https://raw.githubusercontent.com/nanotechid/supreme/aio/menu/restart.sh"
 wget -O bw "https://raw.githubusercontent.com/nanotechid/supreme/aio/menu/bw.sh"
+wget -O m-tcp "https://raw.githubusercontent.com/nanotechid/supreme/aio/menu/tcp.sh"
 
 # change port
 #wget -O port-ssl "https://raw.githubusercontent.com/nanotechid/supreme/aio/port/port-ssl.sh"
@@ -332,18 +334,20 @@ chmod +x delete
 chmod +x autokill
 chmod +x ceklim
 chmod +x tendang
+chmod +x sshws
 
 chmod +x m-system
 chmod +x m-domain
 chmod +x add-host
 #chmod +x port-change
 chmod +x certv2ray
-chmod +x m-webmin
+#chmod +x m-webmin
 chmod +x speedtest
 #chmod +x about
 chmod +x auto-reboot
 chmod +x restart
 chmod +x bw
+chmod +x m-tcp
 
 #chmod +x port-ssl
 #chmod +x port-ovpn
