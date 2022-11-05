@@ -66,8 +66,8 @@ echo $cipher:$uuid > /tmp/log
 shadowsocks_base64=$(cat /tmp/log)
 echo -n "${shadowsocks_base64}" | base64 > /tmp/log1
 shadowsocks_base64e=$(cat /tmp/log1)
-shadowsockslink="ss://${shadowsocks_base64e}@isi_bug_disini:$tls?path=/ss-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
-shadowsockslink1="ss://${shadowsocks_base64e}@isi_bug_disini:$ntls?path=/ss-ws&security=none&host=${domain}&type=ws#${user}"
+shadowsockslink="ss://${shadowsocks_base64e}@isi_bug_disini:$tls?path=ss-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
+shadowsockslink1="ss://${shadowsocks_base64e}@isi_bug_disini:$ntls?path=ss-ws&security=tls&host=${domain}&type=ws#${user}"
 shadowsockslink2="ss://${shadowsocks_base64e}@${domain}:$tls?mode=gun&security=tls&type=grpc&serviceName=ss-grpc&sni=bug.com#${user}"
 systemctl restart xray
 rm -rf /tmp/log
@@ -293,24 +293,24 @@ clear
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
 echo -e "\\E[0;41;36m        Shadowsocks Account      \E[0m" | tee -a /etc/log-create-user.log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
-echo -e "Remarks       : ${user}" | tee -a /etc/log-create-user.log
-echo -e "Domain        : ${domain}" | tee -a /etc/log-create-user.log
-echo -e "Port TLS      : ${tls}" | tee -a /etc/log-create-user.log
-echo -e "Port none TLS : ${ntls}" | tee -a /etc/log-create-user.log
-echo -e "Port gRPC     : ${tls}" | tee -a /etc/log-create-user.log
-echo -e "Password      : ${uuid}" | tee -a /etc/log-create-user.log
-echo -e "Ciphers       : aes-128-gcm" | tee -a /etc/log-create-user.log
-echo -e "Network       : ws/grpc" | tee -a /etc/log-create-user.log
-echo -e "Path          : /ss-ws" | tee -a /etc/log-create-user.log
-echo -e "ServiceName   : ss-grpc" | tee -a /etc/log-create-user.log
+echo -e "Remarks        : ${user}" | tee -a /etc/log-create-user.log
+echo -e "Domain         : ${domain}" | tee -a /etc/log-create-user.log
+echo -e "Port TLS       : ${tls}" | tee -a /etc/log-create-user.log
+echo -e "Port none TLS  : ${ntls}" | tee -a /etc/log-create-user.log
+echo -e "Port gRPC      : ${tls}" | tee -a /etc/log-create-user.log
+echo -e "Password       : ${uuid}" | tee -a /etc/log-create-user.log
+echo -e "Ciphers        : ${cipher}" | tee -a /etc/log-create-user.log
+echo -e "Network        : ws/grpc" | tee -a /etc/log-create-user.log
+echo -e "Path           : /ss-ws" | tee -a /etc/log-create-user.log
+echo -e "ServiceName    : ss-grpc" | tee -a /etc/log-create-user.log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
-echo -e "Link TLS      : ${shadowsockslink}" | tee -a /etc/log-create-user.log
+echo -e "Link TLS       : ${shadowsockslink}" | tee -a /etc/log-create-user.log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
-echo -e "Link none TLS : ${shadowsockslink1}" | tee -a /etc/log-create-user.log
+echo -e "Link none TLS  : ${shadowsockslink1}" | tee -a /etc/log-create-user.log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
-echo -e "Link gRPC     : ${shadowsockslink2}" | tee -a /etc/log-create-user.log
+echo -e "Link gRPC      : ${shadowsockslink2}" | tee -a /etc/log-create-user.log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
-echo -e "Expired On    : $exp" | tee -a /etc/log-create-user.log
+echo -e "Expired On     : $exp" | tee -a /etc/log-create-user.log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
 echo "" | tee -a /etc/log-create-user.log
 read -n 1 -s -r -p "Press any key to back on menu"

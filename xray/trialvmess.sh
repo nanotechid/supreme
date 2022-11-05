@@ -67,15 +67,15 @@ clear
 
 
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[0;41;36m       Trial Vmess      \E[0m"
+echo -e "\E[0;41;36m       Trial Mmess      \E[0m"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "Remarks        : ${user}"
 echo -e "Domain         : ${domain}"
 echo -e "Port TLS       : ${tls}"
 echo -e "Port none TLS  : ${none}"
 echo -e "Port gRPC      : ${tls}"
-echo -e "ID             : ${uuid}"
-echo -e "AlterId        : 0"
+echo -e "id             : ${uuid}"
+echo -e "alterId        : 0"
 echo -e "Security       : auto"
 echo -e "Network        : ws"
 echo -e "Path           : /vmess"
@@ -90,5 +90,7 @@ echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━�
 echo -e "Expired On     : $exp"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
+
 read -n 1 -s -r -p "Press any key to back on menu"
+
 menu
