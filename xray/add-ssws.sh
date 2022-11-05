@@ -295,6 +295,7 @@ echo -e "\\E[0;41;36m        Shadowsocks Account      \E[0m" | tee -a /etc/log-c
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
 echo -e "Remarks        : ${user}" | tee -a /etc/log-create-user.log
 echo -e "Domain         : ${domain}" | tee -a /etc/log-create-user.log
+echo -e "Wildcard       : (bug.com).${domain}" | tee -a /etc/log-create-user.log
 echo -e "Port TLS       : ${tls}" | tee -a /etc/log-create-user.log
 echo -e "Port none TLS  : ${ntls}" | tee -a /etc/log-create-user.log
 echo -e "Port gRPC      : ${tls}" | tee -a /etc/log-create-user.log
