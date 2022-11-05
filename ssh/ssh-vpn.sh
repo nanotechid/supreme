@@ -313,7 +313,7 @@ wget -O m-tcp "https://raw.githubusercontent.com/nanotechid/supreme/aio/menu/tcp
 
 wget -O xp "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/xp.sh"
 #wget -O asu "https://raw.githubusercontent.com/nanotechid/supreme/aio/asu.sh"
-wget -O sshws "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/sshws.sh"
+#wget -O sshws "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/sshws.sh"
 
 chmod +x menu
 chmod +x m-vmess
