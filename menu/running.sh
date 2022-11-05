@@ -54,9 +54,9 @@ CITY=$( curl -s ipinfo.io/city )
 #clear
 
 # CHEK STATUS 
-openvpn_service="$(systemctl show openvpn.service --no-page)"
-oovpn=$(echo "${openvpn_service}" | grep 'ActiveState=' | cut -f2 -d=)
-status_openvp=$(/etc/init.d/openvpn status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#openvpn_service="$(systemctl show openvpn.service --no-page)"
+#oovpn=$(echo "${openvpn_service}" | grep 'ActiveState=' | cut -f2 -d=)
+#status_openvp=$(/etc/init.d/openvpn status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #status_ss_tls="$(systemctl show shadowsocks-libev-server@tls.service --no-page)"
 #ss_tls=$(echo "${status_ss_tls}" | grep 'ActiveState=' | cut -f2 -d=)
 #sst_status=$(systemctl status shadowsocks-libev-server@tls | grep Active | awk '{print $0}' | cut -d "(" -f2 | cut -d ")" -f1) 
@@ -70,21 +70,21 @@ tls_v2ray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut 
 nontls_v2ray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 vless_tls_v2ray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 vless_nontls_v2ray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-geo_ganteng_banget=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+shadowsocks=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #ssr_status=$(systemctl status ssrmu | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 trojan_server=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 dropbear_status=$(/etc/init.d/dropbear status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 stunnel_service=$(/etc/init.d/stunnel4 status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #sstp_service=$(systemctl status accel-ppp | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-squid_service=$(/etc/init.d/squid status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#squid_service=$(/etc/init.d/squid status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 ssh_service=$(/etc/init.d/ssh status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 vnstat_service=$(/etc/init.d/vnstat status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 cron_service=$(/etc/init.d/cron status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 fail2ban_service=$(/etc/init.d/fail2ban status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 #wg="$(systemctl show wg-quick@wg0.service --no-page)"
 #swg=$(echo "${wg}" | grep 'ActiveState=' | cut -f2 -d=)
-trgo="$(systemctl show trojan-go.service --no-page)"                                      
-strgo=$(echo "${trgo}" | grep 'ActiveState=' | cut -f2 -d=)  
+#trgo="$(systemctl show trojan-go.service --no-page)"                                      
+#strgo=$(echo "${trgo}" | grep 'ActiveState=' | cut -f2 -d=)  
 #sswg=$(systemctl status wg-quick@wg0 | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 wstls=$(systemctl status ws-stunnel.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 wsdrop=$(systemctl status ws-dropbear.service | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
@@ -209,10 +209,10 @@ else
 fi
 
 # STATUS SHADOWSOCKS
-if [[ $geo_ganteng_banget == "running" ]]; then 
-   Bismillah=" ${GREEN}Running ${NC}( No Error )${NC}"
+if [[ $shadowsocks == "running" ]]; then 
+   status_shadowsocks=" ${GREEN}Running ${NC}( No Error )${NC}"
 else
-   Bismillah="${RED}  Not Running ${NC}  ( Error )${NC}"
+   status_shadowsocks="${RED}  Not Running ${NC}  ( Error )${NC}"
 fi
 
 
@@ -247,8 +247,8 @@ kernelku=$(uname -r)
 
 # DNS PATCH
 #tipeos2=$(uname -m)
-Name=$(curl -sS https://raw.githubusercontent.com/envy26/envysc/main/anjay/allow | grep $MYIP | awk '{print $2}')
-Exp=$(curl -sS https://raw.githubusercontent.com/envy26/envysc/main/anjay/allow | grep $MYIP | awk '{print $3}')
+Name=$(curl -sS https://raw.githubusercontent.com/nanotechid/supreme/aio/permission/ip | grep $MYIP | awk '{print $2}')
+Exp=$(curl -sS https://raw.githubusercontent.com/nanotechid/supreme/aio/permission/ip | grep $MYIP | awk '{print $3}')
 # GETTING DOMAIN NAME
 Domen="$(cat /etc/xray/domain)"
 echo -e ""
@@ -257,10 +257,6 @@ echo -e "\E[44;1;39m              ⇱ SYSTEM INFORMATION ⇲      \E[0m"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "❇️ Hostname    : $HOSTNAME"
 echo -e "❇️ OS Name     : $Tipe"
-# echo -e "Processor   : $tipeprosesor"
-# echo -e "Proc Core   :$totalcore"
-# echo -e "Virtual     :$typevps"
-# echo -e "Cpu Usage   :$cpu_usage"
 echo -e "❇️ Total RAM   : ${totalram}MB"
 echo -e "❇️ Public IP   : $MYIP"
 echo -e "❇️ Domain      : $Domen"
@@ -286,8 +282,8 @@ echo -e "❇️ XRAYS Vmess None TLS    :$status_nontls_v2ray"
 echo -e "❇️ XRAYS Vless TLS         :$status_tls_vless"
 echo -e "❇️ XRAYS Vless None TLS    :$status_nontls_vless"
 echo -e "❇️ XRAYS Trojan            :$status_virus_trojan"
-echo -e "❇️ Shadowsocks             :$Bismillah"
+echo -e "❇️ Shadowsocks             :$status_shadowsocks"
 echo -e "❇️ Websocket TLS           :$swstls"
-echo -e "❇️ Websocket None TLS      :$swsdrop"
+echo -e "❇️ Websocket None TLS      :$swstls"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo ""
