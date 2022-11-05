@@ -289,7 +289,7 @@ wget -O delete "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/del
 wget -O autokill "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/autokill.sh"
 wget -O ceklim "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/ceklim.sh"
 wget -O tendang "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/tendang.sh"
-wget -O sshws "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/sshws.sh"
+#wget -O sshws "https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/sshws.sh"
 
 # menu system
 wget -O m-system "https://raw.githubusercontent.com/nanotechid/supreme/aio/menu/m-system.sh"
