@@ -246,9 +246,6 @@ echo; echo 'Installation has completed.'
 echo 'Config file is at /usr/local/ddos/ddos.conf'
 echo 'Please send in your comments and/or suggestions to zaf@vsnl.com'
 
-#install bbr dan optimasi kernel
-#wget https://raw.githubusercontent.com/nanotechid/supreme/aio/ssh/bbr.sh && chmod +x bbr.sh && ./bbr.sh
-
 # blokir torrent
 iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
 iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
@@ -326,22 +323,14 @@ chmod +x sshws
 chmod +x m-system
 chmod +x m-domain
 chmod +x add-host
-#chmod +x port-change
 chmod +x certv2ray
-#chmod +x m-webmin
 chmod +x speedtest
-#chmod +x about
 chmod +x auto-reboot
 chmod +x restart
 chmod +x bw
 chmod +x m-tcp
-
-#chmod +x port-ssl
-#chmod +x port-ovpn
-#chmod +x port-tr
 chmod +x xp
-#chmod +x asu
-#chmod +x sshws
+
 cd
 
 
