@@ -113,6 +113,7 @@ echo -e "\E[0;41;36m           TROJAN ACCOUNT           \E[0m" | tee -a /etc/log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
 echo -e "Remarks        : ${user}" | tee -a /etc/log-create-user.log
 echo -e "Host/IP        : ${domain}" | tee -a /etc/log-create-user.log
+echo -e "Wildcard       : (bug.com).${domain}" | tee -a /etc/log-create-user.log
 echo -e "Port TLS       : ${tls}" | tee -a /etc/log-create-user.log
 echo -e "Port none TLS  : ${ntls}" | tee -a /etc/log-create-user.log
 echo -e "Port gRPC      : ${tls}" | tee -a /etc/log-create-user.log
