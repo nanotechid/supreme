@@ -354,7 +354,7 @@ chmod +x m-tcp
 #chmod +x port-tr
 chmod +x xp
 #chmod +x asu
-chmod +x sshws
+#chmod +x sshws
 cd
 
 
