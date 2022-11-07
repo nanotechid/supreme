@@ -318,7 +318,6 @@ chmod +x delete
 chmod +x autokill
 chmod +x ceklim
 chmod +x tendang
-chmod +x sshws
 
 chmod +x m-system
 chmod +x m-domain
