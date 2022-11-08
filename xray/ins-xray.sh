@@ -50,7 +50,7 @@ touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
 # / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.6.1
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.6.3
 
 ## crt xray
 systemctl stop nginx
@@ -134,6 +134,123 @@ cat > /etc/xray/config.json << END
           }
         }
      },
+   {
+     "listen": "127.0.0.1",
+     "port": "26731",
+     "protocol": "vless",
+      "settings": {
+          "decryption":"none",
+            "clients": [
+               {
+                 "id": "${uuid}"
+#vlesstls
+             }
+          ]
+				},
+				"streamSettings": {
+					"network": "tcp",
+          "security": "tls",
+          "tlsSettings": {
+          	"alpn": [
+              "h2",
+          		"http/1.1"
+              ],
+              "certificates": [
+              	{
+              		"certificateFile": "/etc/xray/xray.crt",
+                  "keyFile": "/etc/xray/xray.key"
+                }
+             ]
+          }
+       }
+    },
+    {
+    	"listen": "127.0.0.1",
+    	"port": "21432",
+    	"protocol": "vmess",
+    	"settings": {
+    		"clients": [
+    			{
+    				"id": "${uuid}",
+            "alterId": 0
+#vmesstls
+    			}
+        ]
+    	},
+    	"streamSettings": {
+    		"network": "tcp",
+        "security": "tls",
+        "tlsSettings": {
+        	"certificates": [
+        		{
+        			"certificateFile": "/etc/xray/xray.crt",
+        			"keyFile": "/etc/xray/xray.key"
+        		}
+        	]
+        }
+    	}
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": "21737",
+      "protocol": "trojan",
+      "settings": {
+          "decryption":"none",
+           "clients": [
+              {
+                 "password": "${uuid}"
+#trojantls
+              }
+          ],
+         "udp": true
+				},
+				"streamSettings": {
+					"network": "tcp",
+          "security": "tls",
+          "tlsSettings": {
+          	"alpn": [
+              "h2",
+          		"http/1.1"
+              ],
+              "certificates": [
+              	{
+              		"certificateFile": "/etc/xray/xray.crt",
+                  "keyFile": "/etc/xray/xray.key"
+              	}
+              ]
+           }
+       }
+    },
+   {
+     "listen": "127.0.0.1",
+     "port": "31564",
+     "protocol": "vless",
+      "settings": {
+          "decryption":"none",
+            "clients": [
+               {
+                 "id": "${uuid}"
+#vlessxtls
+             }
+          ]
+      },
+      "streamSettings": {
+      	"network": "tcp",
+        "security": "xtls",
+        "xtlsSettings": {
+        	"alpn": [
+        		"h2",
+        		"http/1.1"
+        		],
+        		"certificates": [
+        			{
+        				"certificateFile": "/etc/xray/xray.crt",
+                "keyFile": "/etc/xray/xray.key"
+        			}
+           ]
+        }
+      }
+   },
     {
       "listen": "127.0.0.1",
       "port": "25432",
@@ -156,7 +273,7 @@ cat > /etc/xray/config.json << END
          }
      },
     {
-         "listen": "127.0.0.1",
+        "listen": "127.0.0.1",
         "port": "30300",
         "protocol": "shadowsocks",
         "settings": {
