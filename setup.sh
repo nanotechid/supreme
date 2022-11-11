@@ -85,8 +85,6 @@ touch /etc/xray/scdomain
 touch /etc/v2ray/scdomain
 
 
-
-
 secs_to_human() {
     echo "Installation time : $(( ${1} / 3600 )) hours $(( (${1} / 60) % 60 )) minute's $(( ${1} % 60 )) seconds"
 }
