@@ -76,9 +76,6 @@ mkdir -p /home/vps/public_html
 
 # set uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
-openssl rand -base64 16 > /etc/xray/passwd
-password=$(openssl rand -base64 16)
-uuid2=$(cat /etc/xray/passwd)
 # xray config
 cat > /etc/xray/config.json << END
 {
@@ -159,15 +156,14 @@ cat > /etc/xray/config.json << END
          }
      },
     {
-        "listen": "127.0.0.1",
+         "listen": "127.0.0.1",
         "port": "30300",
         "protocol": "shadowsocks",
         "settings": {
-        "method": "2022-blake3-aes-128-gcm",
-        "password": "${uuid2}",
-        "clients": [
-          {
-            "password": "${password}"
+           "clients": [
+           {
+           "method": "aes-128-gcm",
+          "password": "${uuid}"
 #ssws
            }
           ],
@@ -241,24 +237,23 @@ cat > /etc/xray/config.json << END
       }
    },
    {
-        "listen": "127.0.0.1",
-        "port": "30310",
-        "protocol": "shadowsocks",
-        "settings": {
-        "method": "2022-blake3-aes-128-gcm",
-        "password": "${uuid2}",
+    "listen": "127.0.0.1",
+    "port": "30310",
+    "protocol": "shadowsocks",
+    "settings": {
         "clients": [
           {
-            "password": "${password}"
+             "method": "aes-128-gcm",
+             "password": "${uuid}"
 #ssgrpc
            }
-          ],
-          "network": "tcp,udp"
+         ],
+           "network": "tcp,udp"
       },
-      "streamSettings":{
-      "network": "grpc",
-      "grpcSettings": {
-        "serviceName": "ss-grpc"
+    "streamSettings":{
+     "network": "grpc",
+        "grpcSettings": {
+           "serviceName": "ss-grpc"
           }
        }
     }	

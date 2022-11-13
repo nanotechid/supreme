@@ -54,11 +54,8 @@ v2ray-menu
 		fi
 	done
 
-cipher="2022-blake3-aes-128-gcm"
+cipher="aes-128-gcm"
 uuid=$(cat /proc/sys/kernel/random/uuid)
-password=$(openssl rand -base64 16)
-uuid2=$(cat /etc/xray/passwd)
-
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#ssws$/a\### '"$user $exp"'\
@@ -72,20 +69,6 @@ shadowsocks_base64e=$(cat /tmp/log1)
 shadowsockslink="ss://${shadowsocks_base64e}@isi_bug_disini:$tls?path=ss-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
 shadowsockslink1="ss://${shadowsocks_base64e}@isi_bug_disini:$ntls?path=ss-ws&security=none&host=${domain}&type=ws#${user}"
 shadowsockslink2="ss://${shadowsocks_base64e}@${domain}:$tls?mode=gun&security=tls&type=grpc&serviceName=ss-grpc&sni=bug.com#${user}"
-
-
-
-sed -i '/#ssws$/a\### '"$user $exp"'\
-},{"password": "'""$password""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#ssgrpc$/a\### '"$user $exp"'\
-},{"password": "'""$password""'","email": "'""$user""'"' /etc/xray/config.json
-temp=$(echo -n "${cipher}:${uuid2}:${password}" | base64 -w0)
-ss1="ss://${temp}@${domain}:443?path=%2Fss-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
-ss2="ss://${temp}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=ss-grpc&sni=${domain}#${user}"
-ss3="ss://${temp}@${domain}:80?path=%2Fss-ws&security=none&host=${domain}&type=ws#${user}"
-
-
-
 systemctl restart xray
 rm -rf /tmp/log
 rm -rf /tmp/log1
@@ -316,20 +299,21 @@ echo -e "Wildcard       : (bug.com).${domain}" | tee -a /etc/log-create-user.log
 echo -e "Port TLS       : ${tls}" | tee -a /etc/log-create-user.log
 echo -e "Port none TLS  : ${ntls}" | tee -a /etc/log-create-user.log
 echo -e "Port gRPC      : ${tls}" | tee -a /etc/log-create-user.log
-echo -e "Password       : ${password}" | tee -a /etc/log-create-user.log
+echo -e "Password       : ${uuid}" | tee -a /etc/log-create-user.log
 echo -e "Ciphers        : ${cipher}" | tee -a /etc/log-create-user.log
 echo -e "Network        : ws/grpc" | tee -a /etc/log-create-user.log
 echo -e "Path           : /ss-ws" | tee -a /etc/log-create-user.log
 echo -e "ServiceName    : ss-grpc" | tee -a /etc/log-create-user.log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
-echo -e "Link TLS       : ${ss1}" | tee -a /etc/log-create-user.log
+echo -e "Link TLS       : ${shadowsockslink}" | tee -a /etc/log-create-user.log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
-echo -e "Link none TLS  : ${ss2}" | tee -a /etc/log-create-user.log
+echo -e "Link none TLS  : ${shadowsockslink1}" | tee -a /etc/log-create-user.log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
-echo -e "Link gRPC      : ${ss3}" | tee -a /etc/log-create-user.log
+echo -e "Link gRPC      : ${shadowsockslink2}" | tee -a /etc/log-create-user.log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
 echo -e "Expired On     : $exp" | tee -a /etc/log-create-user.log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
 echo "" | tee -a /etc/log-create-user.log
 read -n 1 -s -r -p "Press any key to back on menu"
+
 menu
