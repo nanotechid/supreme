@@ -102,7 +102,7 @@ sed -i '/#vless$/a\#& '"$user $exp"'\
 sed -i '/#vlessgrpc$/a\#& '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 
-sed -i '/#vision$/a\#### '"$user $exp"'\
+sed -i '/#vision$/a\#& '"$user $exp"'\
 },{"id": "'""$uuid""'","flow": "'""xtls-rprx-vision""'", "email": "'""$user""'"' /etc/xray/vision.json
 
 
