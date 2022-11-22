@@ -59,8 +59,8 @@ curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
 chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
+/root/.acme.sh/acme.sh --issue -d $domain --standalone 
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key 
 
 # nginx renew ssl
 echo -n '#!/bin/bash
@@ -333,28 +333,24 @@ END
 
 cat > /etc/xray/vision.json << END
 {
-    "log": {
-      "access": "/var/log/xray/access.log",
-      "error": "/var/log/xray/error.log",
-      "loglevel": "info"
+  "log" : {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "info"
+  },
+  "inbounds": [
+      {
+      "listen": "127.0.0.1",
+      "port": 10085,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "127.0.0.1"
+      },
+      "tag": "api"
     },
-    "routing": {
-        "domainStrategy": "IPIfNonMatch",
-        "rules": [
-            {
-                "type": "field",
-                "ip": [
-                    "geoip:cn",
-                    "geoip:private"
-                ],
-                "outboundTag": "block"
-            }
-        ]
-    },
-    "inbounds": [
         {
             "listen": "127.0.0.1",
-            "port": 443,
+            "port": 1443,
             "protocol": "vless",
             "settings": {
                 "clients": [
