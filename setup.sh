@@ -163,8 +163,8 @@ mkdir -p /var/lib/ >/dev/null 2>&1
 echo "IP=" >> /var/lib/ipvps.conf
 
 echo ""
-wget -q https://raw.githubusercontent.com/nanotechid/supreme/aio/tools.sh;chmod +x tools.sh;./tools.sh
-rm tools.sh
+#wget -q https://raw.githubusercontent.com/nanotechid/supreme/aio/tools.sh;chmod +x tools.sh;./tools.sh
+#rm tools.sh
 clear
 red "Tambah Domain Untuk XRAY"
 echo " "
