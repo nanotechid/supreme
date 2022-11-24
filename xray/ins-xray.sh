@@ -1,6 +1,5 @@
 #!/bin/bash
-echo -e "
-"
+echo -e ""
 date
 echo ""
 domain=$(cat /root/domain)
@@ -50,7 +49,7 @@ touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
 # / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.6.1
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" - install --beta
 
 ## crt xray
 systemctl stop nginx
@@ -102,7 +101,7 @@ cat > /etc/xray/config.json << END
           "decryption":"none",
             "clients": [
                {
-                 "id": "${uuid}"
+                 "id": "${uuid}"                 
 #vless
              }
           ]
@@ -256,119 +255,7 @@ cat > /etc/xray/config.json << END
            "serviceName": "ss-grpc"
           }
        }
-    },
-        {
-            "port": 80,
-            "protocol": "vmess",
-            "settings": {
-                "decryption":"none",
-                "clients": [
-                    {
-                        "id": "${uuid}",
-                        "alterId": 0
-#vmesshttp
-                    }
-                ]
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "tcpSettings": {
-                    "header": {
-                        "type": "http",
-                        "request": {
-                            "version": "1.1",
-                            "method": "GET",
-                            "path": "/worryfree",
-                            "headers": {}
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "port": 80,
-            "protocol": "vless",
-            "settings": {
-                "decryption":"none",
-                "clients": [
-                    {
-                        "id": "${uuid}"
-#vlesshttp
-                    }
-                ]
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "tcpSettings": {
-                    "header": {
-                        "type": "http",
-                        "request": {
-                            "version": "1.1",
-                            "method": "GET",
-                            "path": "/worryfree",
-                            "headers": {}
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "port": 80,
-            "protocol": "trojan",
-            "settings": {
-                "decryption":"none",
-                "clients": [
-                    {
-                        "password": "${uuid}"
-#trojanhttp
-                    }
-                ],
-              "udp": true
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "tcpSettings": {
-                    "header": {
-                        "type": "http",
-                        "request": {
-                            "version": "1.1",
-                            "method": "GET",
-                            "path": "/worryfree",
-                            "headers": {}
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "port": 80,
-            "protocol": "shadowsocks",
-            "settings": {
-                "decryption":"none",
-                "clients": [
-                    {
-                        "method": "aes-128-gcm",
-                        "password": "${uuid}"
-#sshttp
-                    }
-                ],
-              "network": "tcp,udp"
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "tcpSettings": {
-                    "header": {
-                        "type": "http",
-                        "request": {
-                            "version": "1.1",
-                            "method": "GET",
-                            "path": "/worryfree",
-                            "headers": {}
-                        }
-                    }
-                }
-            }
-        }
+    }	
   ],
   "outbounds": [
     {
@@ -442,8 +329,8 @@ cat > /etc/xray/config.json << END
   }
 }
 END
+
 rm -rf /etc/systemd/system/xray.service.d
-rm -rf /etc/systemd/system/xray@.service
 cat <<EOF> /etc/systemd/system/xray.service
 Description=Xray Service
 Documentation=https://github.com/xtls
@@ -462,11 +349,174 @@ LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
-
 EOF
+
+cat > /etc/xray/config-http.json << END
+{
+    "log": {
+        "loglevel": "info"
+    },
+    "routing": {
+        "domainStrategy": "AsIs",
+        "rules": [
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:private"
+                ],
+                "outboundTag": "block"
+            }
+        ]
+    },
+    "inbounds": [
+        {
+            "port": 8080,
+            "protocol": "vmess",
+            "settings": {
+                "decryption":"none",
+                "clients": [
+                    {
+                        "id": "${uuid}",
+                        "alterId": 0
+#vmesshttp
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "tcpSettings": {
+                    "header": {
+                        "type": "http",
+                        "request": {
+                            "version": "1.1",
+                            "method": "GET",
+                            "path": "/worryfree",
+                            "headers": {}
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "port": 8080,
+            "protocol": "vless",
+            "settings": {
+                "decryption":"none",
+                "clients": [
+                    {
+                        "id": "${uuid}"
+#vlesshttp
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "tcpSettings": {
+                    "header": {
+                        "type": "http",
+                        "request": {
+                            "version": "1.1",
+                            "method": "GET",
+                            "path": "/worryfree",
+                            "headers": {}
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "port": 8080,
+            "protocol": "trojan",
+            "settings": {
+                "decryption":"none",
+                "clients": [
+                    {
+                        "password": "${uuid}"
+#trojanhttp
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "tcpSettings": {
+                    "header": {
+                        "type": "http",
+                        "request": {
+                            "version": "1.1",
+                            "method": "GET",
+                            "path": "/worryfree",
+                            "headers": {}
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "port": 8080,
+            "protocol": "shadowsocks",
+            "settings": {
+                "decryption":"none",
+                "clients": [
+                    {
+                        "method": "aes-128-gcm",
+                        "password": "${uuid}"
+#sshttp
+                    }
+                ],
+              "network": "tcp,udp"
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "tcpSettings": {
+                    "header": {
+                        "type": "http",
+                        "request": {
+                            "version": "1.1",
+                            "method": "GET",
+                            "path": "/worryfree",
+                            "headers": {}
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "tag": "direct"
+        },
+        {
+            "protocol": "blackhole",
+            "tag": "block"
+        }
+    ]
+}
+END
+
+cat <<EOF> /etc/systemd/system/http.service
+Description=Xray Service
+Documentation=https://github.com/xtls
+After=network.target nss-lookup.target
+
+[Service]
+User=www-data
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/xray run -config /etc/xray/config-http.json
+Restart=on-failure
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
 cat > /etc/systemd/system/runn.service <<EOF
 [Unit]
-Description=Mantap-Sayang
+Description=Log
 After=network.target
 
 [Service]
