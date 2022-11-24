@@ -66,8 +66,8 @@ echo $cipher:$uuid > /tmp/log
 shadowsocks_base64=$(cat /tmp/log)
 echo -n "${shadowsocks_base64}" | base64 > /tmp/log1
 shadowsocks_base64e=$(cat /tmp/log1)
-shadowsockslink="ss://${shadowsocks_base64e}@${domain}:$tls?path=ss-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
-shadowsockslink1="ss://${shadowsocks_base64e}@${domain}:$ntls?path=ss-ws&security=none&host=${domain}&type=ws#${user}"
+shadowsockslink="ss://${shadowsocks_base64e}@${domain}:$tls?path=worryfree&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
+shadowsockslink1="ss://${shadowsocks_base64e}@${domain}:$ntls?path=worryfree&security=none&host=${domain}&type=ws#${user}"
 shadowsockslink2="ss://${shadowsocks_base64e}@${domain}:$tls?mode=gun&security=tls&type=grpc&serviceName=ss-grpc&sni=bug.com#${user}"
 systemctl restart xray
 rm -rf /tmp/log
@@ -139,7 +139,7 @@ cat > /home/vps/public_html/ss-$user.txt <<-END
           "headers": {
             "Host": "$domain"
           },
-          "path": "/ss-ws"
+          "path": "/worryfree"
         }
       },
       "tag": "proxy"
@@ -302,7 +302,7 @@ echo -e "Port gRPC      : ${tls}" | tee -a /etc/log-create-user.log
 echo -e "Password       : ${uuid}" | tee -a /etc/log-create-user.log
 echo -e "Ciphers        : ${cipher}" | tee -a /etc/log-create-user.log
 echo -e "Network        : ws/grpc" | tee -a /etc/log-create-user.log
-echo -e "Path           : /ss-ws" | tee -a /etc/log-create-user.log
+echo -e "Path           : /worryfree" | tee -a /etc/log-create-user.log
 echo -e "ServiceName    : ss-grpc" | tee -a /etc/log-create-user.log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
 echo -e "Link TLS       : ${shadowsockslink}" | tee -a /etc/log-create-user.log
