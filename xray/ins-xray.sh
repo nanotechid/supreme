@@ -102,7 +102,7 @@ cat > /etc/xray/config.json << END
           "decryption":"none",
             "clients": [
                {
-                 "id": "${uuid}"                 
+                 "id": "${uuid}"
 #vless
              }
           ]
@@ -256,7 +256,119 @@ cat > /etc/xray/config.json << END
            "serviceName": "ss-grpc"
           }
        }
-    }	
+    },
+        {
+            "port": 80,
+            "protocol": "vmess",
+            "settings": {
+                "decryption":"none",
+                "clients": [
+                    {
+                        "id": "${uuid}",
+                        "alterId": 0
+#vmesshttp
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "tcpSettings": {
+                    "header": {
+                        "type": "http",
+                        "request": {
+                            "version": "1.1",
+                            "method": "GET",
+                            "path": "/worryfree",
+                            "headers": {}
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "port": 80,
+            "protocol": "vless",
+            "settings": {
+                "decryption":"none",
+                "clients": [
+                    {
+                        "id": "${uuid}"
+#vlesshttp
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "tcpSettings": {
+                    "header": {
+                        "type": "http",
+                        "request": {
+                            "version": "1.1",
+                            "method": "GET",
+                            "path": "/worryfree",
+                            "headers": {}
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "port": 80,
+            "protocol": "trojan",
+            "settings": {
+                "decryption":"none",
+                "clients": [
+                    {
+                        "password": "${uuid}"
+#trojanhttp
+                    }
+                ],
+              "udp": true
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "tcpSettings": {
+                    "header": {
+                        "type": "http",
+                        "request": {
+                            "version": "1.1",
+                            "method": "GET",
+                            "path": "/worryfree",
+                            "headers": {}
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "port": 80,
+            "protocol": "shadowsocks",
+            "settings": {
+                "decryption":"none",
+                "clients": [
+                    {
+                        "method": "aes-128-gcm",
+                        "password": "${uuid}"
+#sshttp
+                    }
+                ],
+              "network": "tcp,udp"
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "tcpSettings": {
+                    "header": {
+                        "type": "http",
+                        "request": {
+                            "version": "1.1",
+                            "method": "GET",
+                            "path": "/worryfree",
+                            "headers": {}
+                        }
+                    }
+                }
+            }
+        }
   ],
   "outbounds": [
     {
