@@ -79,8 +79,6 @@ uuid=$(cat /proc/sys/kernel/random/uuid)
 cat > /etc/xray/config.json << END
 {
   "log" : {
-    "access": "/var/log/xray/access.log",
-    "error": "/var/log/xray/error.log",
     "loglevel": "info"
   },
   "inbounds": [
