@@ -241,25 +241,26 @@ echo "------------------------------------------------------------"
 echo ""
 echo ""
 echo "   >>> Service & Port"  | tee -a log-install.txt
-echo "   - SSH Websocket" | tee -a log-install.txt
-echo "   - SSH SSL Websocket" | tee -a log-install.txt
-echo "   - Stunnel Port : 222, 777" | tee -a log-install.txt
-echo "   - Badvpn : 7100-7900" | tee -a log-install.txt
-echo "   - Vmess Websocket TLS / non TLS" | tee -a log-install.txt
-echo "   - Vless Websocket TLS / non TLS" | tee -a log-install.txt
-echo "   - Trojan Websocket TLS / non TLS" | tee -a log-install.txt
-echo "   - Shadowsocks Websocket TLS / non TLS" | tee -a log-install.txt
-echo "   - Vmess gRPC TLS" | tee -a log-install.txt
-echo "   - Vless gRPC TLS" | tee -a log-install.txt
-echo "   - Trojan gRPC TLS" | tee -a log-install.txt
-echo "   - Shadowsocks gRPC TLS" | tee -a log-install.txt
+echo "   - OpenSSH                  : 22"  | tee -a log-install.txt
+echo "   - SSH Websocket            : 80 [ON]" | tee -a log-install.txt
+echo "   - SSH SSL Websocket        : 443" | tee -a log-install.txt
+echo "   - Stunnel4                 : 222, 777" | tee -a log-install.txt
+echo "   - Dropbear                 : 109, 143" | tee -a log-install.txt
+echo "   - Badvpn                   : 7100-7900" | tee -a log-install.txt
+echo "   - Nginx                    : 81" | tee -a log-install.txt
+echo "   - Vmess WS TLS             : 443" | tee -a log-install.txt
+echo "   - Vless WS TLS             : 443" | tee -a log-install.txt
+echo "   - Trojan WS TLS            : 443" | tee -a log-install.txt
+echo "   - Shadowsocks WS TLS       : 443" | tee -a log-install.txt
+echo "   - Vmess WS none TLS        : 80" | tee -a log-install.txt
+echo "   - Vless WS none TLS        : 80" | tee -a log-install.txt
+echo "   - Trojan WS none TLS       : 80" | tee -a log-install.txt
+echo "   - Shadowsocks WS none TLS  : 80" | tee -a log-install.txt
+echo "   - Vmess gRPC               : 443" | tee -a log-install.txt
+echo "   - Vless gRPC               : 443" | tee -a log-install.txt
+echo "   - Trojan gRPC              : 443" | tee -a log-install.txt
+echo "   - Shadowsocks gRPC         : 443" | tee -a log-install.txt
 echo ""
-echo "   >>> Default Port" | tee -a log-install.txt
-echo "   - Port TLS: 443" | tee -a log-install.txt
-echo "   - Port non TLS: 80" | tee -a log-install.txt
-echo "   >>> Other Port" | tee -a log-install.txt
-echo "   - TLS: 2053, 2083, 2087, 2096, 8443" | tee -a log-install.txt
-echo "   - non TLS: 8080, 8880, 2052, 2082, 2086 2095" | tee -a log-install.txt
 echo ""
 echo "------------------------------------------------------------"
 echo ""
