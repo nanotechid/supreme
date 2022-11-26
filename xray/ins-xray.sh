@@ -50,7 +50,7 @@ touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
 # / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.6.1
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" - install --beta
 
 ## crt xray
 systemctl stop nginx
@@ -60,7 +60,7 @@ chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
+~/.acme.sh/acme.sh --issue -d $domain --server letsencrypt --keylength ec-256 --fullchain-file /etc/xray/xray.crt --key-file /etc/xray/xray.key --standalone --force
 
 # nginx renew ssl
 echo -n '#!/bin/bash
@@ -72,191 +72,185 @@ echo -n '#!/bin/bash
 chmod +x /usr/local/bin/ssl_renew.sh
 if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
 
-mkdir -p /home/vps/public_html
-
 # set uuid
 uuid=$(cat /proc/sys/kernel/random/uuid)
 # xray config
 cat > /etc/xray/config.json << END
 {
   "log" : {
-    "access": "/var/log/xray/access.log",
-    "error": "/var/log/xray/error.log",
     "loglevel": "info"
   },
   "inbounds": [
-      {
+    {
       "listen": "127.0.0.1",
       "port": 10085,
       "protocol": "dokodemo-door",
       "settings": {
         "address": "127.0.0.1"
-      },
+        },
       "tag": "api"
     },
-   {
-     "listen": "127.0.0.1",
-     "port": "14016",
-     "protocol": "vless",
-      "settings": {
-          "decryption":"none",
-            "clients": [
-               {
-                 "id": "${uuid}"                 
-#vless
-             }
-          ]
-       },
-       "streamSettings":{
-         "network": "ws",
-            "wsSettings": {
-                "path": "/vless"
-          }
-        }
-     },
-     {
-     "listen": "127.0.0.1",
-     "port": "23456",
-     "protocol": "vmess",
-      "settings": {
-            "clients": [
-               {
-                 "id": "${uuid}",
-                 "alterId": 0
-#vmess
-             }
-          ]
-       },
-       "streamSettings":{
-         "network": "ws",
-            "wsSettings": {
-                "path": "/vmess"
-          }
-        }
-     },
     {
       "listen": "127.0.0.1",
-      "port": "25432",
-      "protocol": "trojan",
+      "port": "14016",
+      "protocol": "vless",
       "settings": {
-          "decryption":"none",		
-           "clients": [
-              {
-                 "password": "${uuid}"
-#trojanws
-              }
-          ],
-         "udp": true
-       },
-       "streamSettings":{
-           "network": "ws",
-           "wsSettings": {
-               "path": "/trojan-ws"
-            }
-         }
-     },
-    {
-         "listen": "127.0.0.1",
-        "port": "30300",
-        "protocol": "shadowsocks",
-        "settings": {
-           "clients": [
-           {
-           "method": "aes-128-gcm",
-          "password": "${uuid}"
-#ssws
-           }
-          ],
-          "network": "tcp,udp"
-       },
-       "streamSettings":{
-          "network": "ws",
-             "wsSettings": {
-               "path": "/ss-ws"
-           }
-        }
-     },	
-      {
-        "listen": "127.0.0.1",
-     "port": "24456",
-        "protocol": "vless",
-        "settings": {
-         "decryption":"none",
-           "clients": [
-             {
-               "id": "${uuid}"
-#vlessgrpc
-             }
-          ]
-       },
-          "streamSettings":{
-             "network": "grpc",
-             "grpcSettings": {
-                "serviceName": "vless-grpc"
-           }
-        }
-     },
-     {
-      "listen": "127.0.0.1",
-     "port": "31234",
-     "protocol": "vmess",
-      "settings": {
-            "clients": [
-               {
-                 "id": "${uuid}",
-                 "alterId": 0
-#vmessgrpc
-             }
-          ]
-       },
-       "streamSettings":{
-         "network": "grpc",
-            "grpcSettings": {
-                "serviceName": "vmess-grpc"
-          }
-        }
-     },
-     {
-        "listen": "127.0.0.1",
-     "port": "33456",
-        "protocol": "trojan",
-        "settings": {
-          "decryption":"none",
-             "clients": [
-               {
-                 "password": "${uuid}"
-#trojangrpc
-               }
-           ]
-        },
-         "streamSettings":{
-         "network": "grpc",
-           "grpcSettings": {
-               "serviceName": "trojan-grpc"
-         }
-      }
-   },
-   {
-    "listen": "127.0.0.1",
-    "port": "30310",
-    "protocol": "shadowsocks",
-    "settings": {
+        "decryption":"none",
         "clients": [
           {
-             "method": "aes-128-gcm",
-             "password": "${uuid}"
-#ssgrpc
-           }
-         ],
-           "network": "tcp,udp"
-      },
-    "streamSettings":{
-     "network": "grpc",
-        "grpcSettings": {
-           "serviceName": "ss-grpc"
+            "id": "$uuid"
+#vless
           }
-       }
-    }	
+        ]
+      },
+      "streamSettings":{
+        "network": "ws",
+        "wsSettings": {
+          "path": "/worryfree/vless"
+        }
+      }
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": "23456",
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "$uuid",
+            "alterId": 0
+#vmess
+          }
+        ]
+      },
+      "streamSettings":{
+        "network": "ws",
+        "wsSettings": {
+          "path": "/worryfree/vmess"
+        }
+      }
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": "25025",
+      "protocol": "trojan",
+      "settings": {
+        "decryption":"none",
+        "clients": [
+          {
+            "password": "$uuid"
+#trojanws
+          }
+        ]
+      },
+      "streamSettings":{
+        "network": "ws",
+        "wsSettings": {
+          "path": "/worryfree/trojan"
+        }
+      }
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": "25035",
+      "protocol": "shadowsocks",
+      "settings": {
+        "decryption":"none",
+        "clients": [
+          {
+            "method": "aes-256-gcm",
+            "password": "$uuid"
+#ssws
+          }
+        ]
+      },
+      "streamSettings":{
+        "network": "ws",
+        "wsSettings": {
+          "path": "/worryfree/shadowsocks"
+        }
+      }
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": "24456",
+      "protocol": "vless",
+      "settings": {
+        "decryption":"none",
+        "clients": [
+          {
+            "id": "$uuid"
+#vlessgrpc
+          }
+        ]
+      },
+      "streamSettings":{
+        "network": "grpc",
+        "grpcSettings": {
+          "serviceName": "vless-grpc"
+        }
+      }
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": "31234",
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "$uuid",
+            "alterId": 0
+#vmessgrpc
+          }
+        ]
+      },
+      "streamSettings":{
+        "network": "grpc",
+        "grpcSettings": {
+          "serviceName": "vmess-grpc"
+        }
+      }
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": "33456",
+      "protocol": "trojan",
+      "settings": {
+        "decryption":"none",
+        "clients": [
+          {
+            "password": "$uuid"
+#trojangrpc
+          }
+        ]
+      },
+      "streamSettings":{
+        "network": "grpc",
+        "grpcSettings": {
+          "serviceName": "trojan-grpc"
+        }
+      }
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": "30310",
+      "protocol": "shadowsocks",
+      "settings": {
+        "clients": [
+          {
+            "method": "aes-256-gcm",
+            "password": "$uuid"
+#ssgrpc
+          }
+        ]
+      },
+      "streamSettings":{
+        "network": "grpc",
+        "grpcSettings": {
+          "serviceName": "shadowsocks-grpc"
+        }
+      }
+    }
   ],
   "outbounds": [
     {
@@ -330,8 +324,7 @@ cat > /etc/xray/config.json << END
   }
 }
 END
-rm -rf /etc/systemd/system/xray.service.d
-rm -rf /etc/systemd/system/xray@.service
+
 cat <<EOF> /etc/systemd/system/xray.service
 Description=Xray Service
 Documentation=https://github.com/xtls
@@ -354,7 +347,7 @@ WantedBy=multi-user.target
 EOF
 cat > /etc/systemd/system/runn.service <<EOF
 [Unit]
-Description=Mantap-Sayang
+Description=Run
 After=network.target
 
 [Service]
@@ -372,17 +365,39 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
     server {
              listen 80;
              listen [::]:80;
+             listen 2052;
+             listen [::]:2052;
+             listen 2082;
+             listen [::]:2082;
+             listen 2086;
+             listen [::]:2086;
+             listen 2095;
+             listen [::]:2095;
+             listen 8080;
+             listen [::]:8080;
+             listen 8880;
+             listen [::]:8880;
              listen 443 ssl http2 reuseport;
              listen [::]:443 http2 reuseport;	
+             listen 2053 ssl http2 reuseport;
+             listen [::]:2053 http2 reuseport;	
+             listen 2083 ssl http2 reuseport;
+             listen [::]:2083 http2 reuseport;	
+             listen 2087 ssl http2 reuseport;
+             listen [::]:2087 http2 reuseport;	
+             listen 2096 ssl http2 reuseport;
+             listen [::]:2096 http2 reuseport;	
+             listen 8443 ssl http2 reuseport;
+             listen [::]:8443 http2 reuseport;	
              server_name *.$domain;
              ssl_certificate /etc/xray/xray.crt;
              ssl_certificate_key /etc/xray/xray.key;
              ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
              ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
-             root /home/vps/public_html;
         }
 EOF
-sed -i '$ ilocation = /vless' /etc/nginx/conf.d/xray.conf
+
+sed -i '$ ilocation = /worryfree/vless' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:14016;' /etc/nginx/conf.d/xray.conf
@@ -394,7 +409,7 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /worryfree/vmess' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_pass http://127.0.0.1:23456;' /etc/nginx/conf.d/xray.conf
@@ -406,10 +421,10 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /trojan-ws' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /worryfree/trojan' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:25432;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:25025;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
@@ -418,10 +433,10 @@ sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation = /ss-ws' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation = /worryfree/shadowsocks' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:30300;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:25035;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
@@ -469,7 +484,7 @@ sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:33456;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
-sed -i '$ ilocation ^~ /ss-grpc' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation ^~ /shadowsocks-grpc' /etc/nginx/conf.d/xray.conf
 sed -i '$ i{' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf

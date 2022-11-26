@@ -72,8 +72,8 @@ else
 domain=$IP
 fi
 
-tls="$(cat ~/log-install.txt | grep -w "Vmess WS TLS" | cut -d: -f2|sed 's/ //g')"
-none="$(cat ~/log-install.txt | grep -w "Vmess WS none TLS" | cut -d: -f2|sed 's/ //g')"
+tls="$(cat ~/log-install.txt | grep -w "Port TLS" | cut -d: -f2|sed 's/ //g')"
+none="$(cat ~/log-install.txt | grep -w "Port non TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\\E[0;41;36m      Add Vmess Account      \E[0m"
@@ -113,10 +113,11 @@ asu=`cat<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "/vmess",
+      "path": "/worryfree/vmess",
       "type": "none",
-      "host": "",
-      "tls": "tls"
+      "host": "${domain}",
+      "tls": "tls",
+      "sni": "${domain}"
 }
 EOF`
 ask=`cat<<EOF
@@ -128,9 +129,9 @@ ask=`cat<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "/vmess",
+      "path": "/worryfree/vmess",
       "type": "none",
-      "host": "",
+      "host": "${domain}",
       "tls": "none"
 }
 EOF`
@@ -145,7 +146,7 @@ grpc=`cat<<EOF
       "net": "grpc",
       "path": "vmess-grpc",
       "type": "none",
-      "host": "",
+      "host": "${domain}",
       "tls": "tls"
 }
 EOF`
@@ -170,8 +171,8 @@ echo -e "Port gRPC      : ${tls}" | tee -a /etc/log-create-user.log
 echo -e "id             : ${uuid}" | tee -a /etc/log-create-user.log
 echo -e "alterId        : 0" | tee -a /etc/log-create-user.log
 echo -e "Security       : auto" | tee -a /etc/log-create-user.log
-echo -e "Network        : ws" | tee -a /etc/log-create-user.log
-echo -e "Path           : /vmess" | tee -a /etc/log-create-user.log
+echo -e "Network        : ws, grpc" | tee -a /etc/log-create-user.log
+echo -e "Path           : /worryfree/vmess" | tee -a /etc/log-create-user.log
 echo -e "ServiceName    : vmess-grpc" | tee -a /etc/log-create-user.log
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
 echo -e "Link TLS       : ${vmesslink1}" | tee -a /etc/log-create-user.log
