@@ -13,9 +13,9 @@
 - Shadowsocks gRPC
 
 # Port TLS:
-- 80, 8080, 8880, 2052, 2082, 2086 2095
-# Port non TLS:
 - 443, 2053, 2083, 2087, 2096, 8443
+# Port non TLS:
+- 80, 8080, 8880, 2052, 2082, 2086 2095
 
 # Link Instalasi
 
