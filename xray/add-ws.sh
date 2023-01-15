@@ -5,8 +5,8 @@ while getopts u:e:s: flag
 do
     case "${flag}" in
         u) user=${OPTARG};;
-        a) masaaktif=${OPTARG};;
-        f) sni=${OPTARG};;
+        e) masaaktif=${OPTARG};;
+        s) sni=${OPTARG};;
     esac
 done
 
