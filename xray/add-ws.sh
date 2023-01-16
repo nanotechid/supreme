@@ -10,34 +10,12 @@ do
     esac
 done
 
-res="Permission Accepted..."
-red='\e[1;31m'
-green='\e[0;32m'
-NC='\e[0m'
-green() { echo -e "\\033[32;1m${*}\\033[0m"; }
-red() { echo -e "\\033[31;1m${*}\\033[0m"; }
-
-
-if [ -f /home/needupdate ]; then
-red "Your script need to update first !"
-exit 0
-elif [ "$res" = "Permission Accepted..." ]; then
-echo -ne
-else
-red "Permission Denied!"
-exit 0
-fi
-
-clear
 source /var/lib/ipvps.conf
 if [[ "$IP" = "" ]]; then
 domain=$(cat /etc/xray/domain)
 else
 domain=$IP
 fi
-
-tls="$(cat ~/log-install.txt | grep -w "Vmess WS TLS" | cut -d: -f2|sed 's/ //g')"
-none="$(cat ~/log-install.txt | grep -w "Vmess WS none TLS" | cut -d: -f2|sed 's/ //g')"
 
 CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json)
 
@@ -104,24 +82,13 @@ vmesslink2="vmess://$(echo $ask | base64 -w 0)"
 vmesslink3="vmess://$(echo $grpc | base64 -w 0)"
 systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1
-clear
 result=`cat<<EOF
-{"Remarks":"${user}",
-"Domain":"${domain}",
-"Wildcard":"(bug.com).${domain}",
-"PortTLS":"${tls}",
-"PortnoneTLS":"${none}",
-"PortgRPC":"${tls}",
-"id":"${uuid}",
-"alterId":"0",
-"Security":"auto",
-"Network":"ws",
-"Path":"/vmess",
-"ServiceName":"vmess-grpc",
-"LinkTLS":"${vmesslink1}",
-"LinknoneTLS":"${vmesslink2}",
-"LinkgRPC":"${vmesslink3}",
-"Expired On":$exp"}
+       {
+       "LinkTLS":"${vmesslink1}",
+       "LinknoneTLS":"${vmesslink2}",
+       "LinkgRPC":"${vmesslink3}",
+       "ExpiredOn":"$exp"
+}
 EOF`
 
 echo $result | tee -a /etc/log-create-user.log;
