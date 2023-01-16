@@ -68,7 +68,7 @@ service cron restart > /dev/null 2>&1
 result=`cat<<EOF
       {
       "Host":"${domain}",
-	    "User":"${user}",
+      "User":"${user}",
 	    "UUID":"${uuid}",
 	    "PortTLS":"443",
 	    "NoneTLS":"80",
