@@ -69,11 +69,11 @@ result=`cat<<EOF
       {
       "Host":"${domain}",
       "User":"${user}",
-	    "UUID":"${uuid}",
-	    "PortTLS":"443",
-	    "NoneTLS":"80",
-	    "Vmess":"WS",
-	    "Path":"/vmess",
+      "UUID":"${uuid}",
+      "PortTLS":"443",
+      "NoneTLS":"80",
+      "Vmess":"WS",
+      "Path":"/vmess",
       "LinkTLS":"${vmesslink1}",
       "LinknoneTLS":"${vmesslink2}",
       "ExpiredOn":"$exp"
