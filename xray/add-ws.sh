@@ -68,12 +68,12 @@ service cron restart > /dev/null 2>&1
 result=`cat<<EOF
         {
         "Host":"${domain}",
-				"User":"${user}",
-				"UUID":"${uuid}",
-				"PortTLS":"443",
-				"NoneTLS":"80",
-				"Vmess":"WS",
-				"Path":"/vmess",
+	"User":"${user}",
+	"UUID":"${uuid}",
+	"PortTLS":"443",
+	"NoneTLS":"80",
+	"Vmess":"WS",
+	"Path":"/vmess",
         "LinkTLS":"${vmesslink1}",
         "LinknoneTLS":"${vmesslink2}",
         "ExpiredOn":"$exp"
