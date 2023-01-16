@@ -1,0 +1,14 @@
+[Unit]
+Description=Tunnel Api
+
+[Service]
+User=root
+WorkingDirectory=/root
+ExecStart=/usr/bin/tunnapi
+Type=simple
+TimeoutStopSec=10
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
